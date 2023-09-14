@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.food_app.databinding.FragmentRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
+    private lateinit var binding: FragmentRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,14 +21,14 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val passwordInput = view.findViewById<TextInputEditText>(R.id.password)
-        val emailInput = view.findViewById<TextInputEditText>(R.id.email)
-        val usernameInput = view.findViewById<TextInputEditText>(R.id.username)
-
+        binding.navigationLogin.setOnClickListener{
+            findNavController().navigate(R.id.RegisterToLogin)
+        }
     }
 }

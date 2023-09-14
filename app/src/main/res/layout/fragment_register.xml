@@ -84,7 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-
             android:text="Have an account? Login here"/>
 
     </LinearLayout>
