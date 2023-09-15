@@ -3,6 +3,7 @@ package com.example.food_app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,30 +17,24 @@ class MainActivity : AppCompatActivity() {
     private val fireBaseViewModel: FireBaseViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fireBaseViewModel.acc.observe(this) {
-            if(fireBaseViewModel.availableUser()){
-                setContentView(R.layout.activity_app)
-                val navController = findNavController(R.id.nav_host_fragment)
-                val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-                bottomNav?.setupWithNavController(navController)
-            }else{
-                setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_app)
+        setUpNavigation()
+        fireBaseViewModel.logged.observe(this) {
+            Log.d("pog","${fireBaseViewModel.acc}")
+            if(it==false){
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
         }
-//        setContentView(R.layout.activity_app)
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//        bottomNav?.setupWithNavController(navController)
-//        fireBaseViewModel.acc.observe(this) {
-//            if (fireBaseViewModel.availableUser()) {
-//                startActivity(Intent(this, LoginActivity::class.java))
-//                finish()
-//            }
-//        }
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+    private fun setUpNavigation() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNav?.setupWithNavController(navController)
     }
 }

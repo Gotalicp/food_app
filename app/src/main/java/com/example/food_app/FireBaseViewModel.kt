@@ -17,23 +17,33 @@ class FireBaseViewModel (application:Application): AndroidViewModel(application)
     private val _acc = MutableLiveData<Accounts>()
     val acc: LiveData<Accounts> get() = _acc
 
+    private val _logged = MutableLiveData<Boolean>()
+    val logged: LiveData<Boolean> get() = _logged
+
     private val fireBaseAdapter = FireBaseAdapter()
 
     init {
-        _acc.value = currentUser.let { fireBaseAdapter.adapt(it) }
+        if(currentUser==null){
+            _acc.value = Accounts(null,null,null)
+            _logged.value = false
+        } else {
+         _acc.value= currentUser.let { fireBaseAdapter.adapt(it) }
+            _logged.value = true
+        }
     }
 
-    fun availableUser() :Boolean{
+    fun emtpyUser() :Boolean{
         if (currentUser == null) {
-            return false
+            return true
         }
-        return true
+        return false
     }
 
     fun createAcc(email: String , password: String , context: View){
         Firebase.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    _logged.value= true
                     updateAcc(currentUser.let { fireBaseAdapter.adapt(it)!! })
                     Snackbar.make(
                         context,
@@ -54,6 +64,7 @@ class FireBaseViewModel (application:Application): AndroidViewModel(application)
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    _logged.value=true
                     updateAcc(currentUser.let { fireBaseAdapter.adapt(it)!! })
                     Snackbar.make(
                         context,
@@ -79,5 +90,6 @@ class FireBaseViewModel (application:Application): AndroidViewModel(application)
     fun logout(){
         Firebase.auth.signOut()
         updateAcc(Accounts(null,null,null))
+        _logged.value=false
     }
 }

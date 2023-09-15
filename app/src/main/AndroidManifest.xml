@@ -15,6 +15,12 @@
         android:theme="@style/Theme.Food_app"
         tools:targetApi="31">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Food_app">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -24,12 +30,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Food_app">
         </activity>
     </application>
 
