@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/appFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_home"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/searchFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_button_nav_search"
+        android:title="@string/search_recipe"/>
+    <item
+        android:id="@+id/favFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_heart"
+        android:title="@string/favourites"/>
+    <item
+        android:id="@+id/accFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_bottom_nav_trivia"
+        android:title="@string/acc"/>
+</menu>
