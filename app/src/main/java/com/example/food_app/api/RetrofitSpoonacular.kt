@@ -1,11 +1,13 @@
 package com.example.food_app.api
 
+import com.example.food_app.data.AnalyzedRecipe
 import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.Predict
 import com.example.food_app.data.PredictionAdapter
 import com.example.food_app.data.RawResult
 import com.example.food_app.data.Recipe
 import com.example.food_app.data.RecipeAdapter
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -15,7 +17,7 @@ import retrofit2.http.Query
 class RetrofitSpoonacular: RetrofitService {
     companion object {
         const val API_KEY = "ce49337c976545478fececd91b626e81"
-        const val API_HOST = "https://api.spoonacular.com/recipes/"
+        const val API_HOST = "https://api.spoonacular.com/"
 
         private var api: RetrofitSpoonacular? = null
 
@@ -37,10 +39,11 @@ class RetrofitSpoonacular: RetrofitService {
     }
 
     override suspend fun getRecipesByComplexSearch(query: String, offset: Int): List<Recipe> = recipeApi.getRecipes(API_KEY, query ,offset).results.mapNotNull { recipeAdapter.adapt(it!!) }
-    override suspend fun getRandomRecipe(): Recipe? = recipeApi.getRandomRecipe(API_KEY).results.first()?.let { recipeAdapter.adapt(it) }
+    override suspend fun getRandomRecipes(number: Int): List<Recipe>? = recipeApi.getRandomRecipe(API_KEY,number).results.mapNotNull {recipeAdapter.adapt(it!!)}
     override suspend fun getTheRecipes(id: Int): ExtendedRecipe? = recipeApi.getTheRecipe(API_KEY,id)
     override suspend fun getBulkRecipes(ids:String): List<ExtendedRecipe> = recipeApi.getBulkRecipe(API_KEY,ids)
     override suspend fun getSearchPrediction(query:String): List<String>? = recipeApi.getPrediction(API_KEY,query).mapNotNull { predictionAdapter.adapt(it) }
+    override suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe): ExtendedRecipe = recipe.apply { analyzedRecipe = recipeApi.getAnalyzedRecipe(API_KEY,recipe.id) }
 }
 
 interface RecipeApi {
@@ -51,12 +54,12 @@ interface RecipeApi {
         @Query("offset") offset: Int,
         @Query("number") number: Int = 6
     ): RawResult
-    @GET("random")
+    @GET("recipes/random")
     suspend fun getRandomRecipe(
-        @Query("apiKey") apiKey: String,
-        @Query("number") number: Int = 1
-    ): RawResult
-    @GET("information")
+        @Query("number") number: Int,
+        @Query("apiKey") apiKey: String
+        ): Call<YourResponseModel>
+    @GET("{id}/information")
     suspend fun getTheRecipe(
         @Query("apiKey") apiKey: String,
         @Query("id") id: Int
@@ -73,4 +76,10 @@ interface RecipeApi {
         @Query("query") query:String,
         @Query("number") number:Int = 5
     ): List<Predict>
+
+    @GET("{id}/analyzedInstructions")
+    suspend fun getAnalyzedRecipe(
+        @Query("apiKey") apiKey: String,
+        @Query("id") query: Int,
+    ): AnalyzedRecipe
 }

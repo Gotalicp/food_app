@@ -12,7 +12,10 @@ import com.example.food_app.data.Recipe
 
 class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
-    private val items = mutableListOf<Recipe>()
+    private var items = mutableListOf<Recipe>()
+
+    var itemClickListener: ItemClickListener<Recipe>? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.search_result_view, parent, false)
@@ -20,6 +23,10 @@ class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
     }
 
     override fun getItemCount() = items.size
+    fun updateItems(list: List<Recipe>){
+        items = list.toMutableList()
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
         holder.bind(items[position])
@@ -34,8 +41,13 @@ class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
                 .placeholder(R.drawable.loading)
                 .centerCrop()
                 .into(imageView)
-
             textView.text = recipe.title
+            itemView.setOnClickListener {
+                itemClickListener?.onItemClicked(recipe, absoluteAdapterPosition)
+            }
         }
     }
+}
+interface ItemClickListener<T> {
+    fun onItemClicked(item: T, itemPosition: Int)
 }

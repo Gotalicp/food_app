@@ -1,4 +1,7 @@
 package com.example.food_app.data
+
+import android.health.connect.datatypes.StepsCadenceRecord
+
 data class RawResult(
     val results: List<Recipe?> = emptyList(),
     val offset: Int? = 0,
@@ -10,7 +13,6 @@ data class Recipe(
     val title: String,
     val imageUrl: String?,
 )
-
 data class Predict(
     val id: Int,
     val title: String
@@ -33,5 +35,10 @@ data class ExtendedRecipe(
     val readyInMinutes: String?,
     val analyzedInstructions: String?,
     val extendedIngredients: List<Ingredient>,
-    val summary: String?
+    val summary: String?,
+    var analyzedRecipe:AnalyzedRecipe?
+)
+data class AnalyzedRecipe(
+    val name:String?,
+    val steps: List<Pair<Int,String>>
 )

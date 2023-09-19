@@ -21,11 +21,10 @@ class PredictionAdapter: RecyclerView.Adapter<PredictionAdapter.PredictionViewHo
     override fun getItemCount() = items.size
 
     fun updateItems(list: List<String>){
-        Log.d("items",items.toString())
         items = list
-        Log.d("items",items.toString())
         notifyDataSetChanged()
     }
+
     override fun onBindViewHolder(holder: PredictionViewHolder, position: Int) {
         holder.bind(items[position])
     }

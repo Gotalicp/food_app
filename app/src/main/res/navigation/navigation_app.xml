@@ -7,12 +7,20 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.food_app.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/SearchToRecipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favFragment"
         android:name="com.example.food_app.FavFragment"
         android:label="fragment_fav"
-        tools:layout="@layout/fragment_fav" />
+        tools:layout="@layout/fragment_fav" >
+        <action
+            android:id="@+id/FavToRecipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.food_app.SettingsFragment"
@@ -27,5 +35,23 @@
         android:id="@+id/historyFragment"
         android:name="com.example.food_app.HistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/HistoryToRecipe"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.food_app.search.RecipeFragment"
+        android:label="RecipeFragment" >
+        <action
+            android:id="@+id/RecipeToSearch"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/RecipeToFav"
+            app:destination="@id/favFragment" />
+        <action
+            android:id="@+id/RecipeToHistory"
+            app:destination="@id/historyFragment" />
+    </fragment>
 </navigation>

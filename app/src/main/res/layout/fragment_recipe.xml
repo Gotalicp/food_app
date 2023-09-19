@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="search.RecipeFragment">
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/favorite_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/emptyfav"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/like_button"/>
+
+    <ImageButton
+        android:id="@+id/like_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/emptylike"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/recipeImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        app:layout_constraintEnd_toStartOf="@+id/ingredientsScrollView"
+        app:layout_constraintBottom_toTopOf="@+id/instructionsScrollView" />
+
+    <ScrollView
+        android:id="@+id/ingredientsScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        app:layout_constraintStart_toEndOf="@+id/recipeImage"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/instructionsScrollView">
+
+        <TextView
+            android:id="@+id/ingredientsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Ingredients:\n1. Ingredient 1\n2. Ingredient 2\n3. Ingredient 3\n..."
+            android:textSize="16sp" />
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/instructionsScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredientsScrollView"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/instructionsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Instructions:\n1. Step 1\n2. Step 2\n3. Step 3\n..."
+            android:textSize="16sp" />
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.food_app.data
 
+import android.util.Log
 import com.example.food_app.common.Adapter
 class RecipeAdapter : Adapter<Recipe, Recipe>  {
     override fun adapt(t: Recipe): Recipe? {
