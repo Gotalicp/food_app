@@ -1,18 +1,38 @@
 package com.example.food_app.data
-
-class ApiData {
-}
-@JsonIgnoreProperties(ignoreUnknown = true)
 data class RawResult(
-    @JsonProperty("results") val results: List<Recipe?> = emptyList(),
-    @JsonProperty("offset") val offset: Int? = 0,
-    @JsonProperty("number") val number: Int? = 0,
-    @JsonProperty("totalResults") val totalResults: Int? = 0
+    val results: List<Recipe?> = emptyList(),
+    val offset: Int? = 0,
+    val number: Int? = 0,
+    val totalResults: Int? = 0
 )
-    @JsonIgnoreProperties(ignoreUnknown = true)
 data class RawRecipe(
-    @JsonProperty("id") val id: Int,
-    @JsonProperty("title") val title: String? = null,
-    @JsonProperty("image") val image: String? = null,
-    @JsonProperty("imageType") val imageType: String? = null
+    val id: Int,
+    val title: String? = null,
+    val image: String? = null,
+    val imageType: String? = null
+)
+data class Recipe(
+    val id: Int,
+    val title: String,
+    val imageUrl: String?,
+)
+data class Ingredient(
+    val id: Int,
+    val name: String,
+    val consistency: String?,
+    val amount: Metric,
+    val original : String?
+)
+data class Metric(
+    val amount: Float,
+    val unitShort: String
+)
+data class ExtendedRecipe(
+    val id: Int,
+    val title: String,
+    val image: String?,
+    val readyInMinutes: String?,
+    val analyzedInstructions: String?,
+    val extendedIngredients: List<Ingredient>,
+    val summary: String?
 )
