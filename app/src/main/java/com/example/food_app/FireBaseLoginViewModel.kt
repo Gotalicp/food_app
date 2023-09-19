@@ -10,7 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class FireBaseViewModel (application:Application): AndroidViewModel(application){
+class FireBaseLoginViewModel (application:Application): AndroidViewModel(application){
 
     private var currentUser = Firebase.auth.currentUser
 

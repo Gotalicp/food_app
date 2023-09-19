@@ -6,13 +6,12 @@
     <string name="fragment_search_recipes">Search Recipes</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <!-- Strings used for bottom navigation bar -->
     <string name="search_recipe">Search</string>
     <string name="favourites">Favourites</string>
     <string name="home">Home</string>
-    <string name="acc">Accounts</string>
-    <!-- Strings used for text views -->
-    <!-- Strings for home screen -->
+    <string name="settings">Settings</string>
+    <string name="trivia">Trivia</string>
+    <string name="history">History</string>
     <string name="previous_recipes">These are some you have tried!</string>
     <string name="recipe_of_the_day">Want to try something <font color="#FC9F5B">new</font>?</string>
 </resources>

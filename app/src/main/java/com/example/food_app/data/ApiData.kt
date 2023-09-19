@@ -5,16 +5,15 @@ data class RawResult(
     val number: Int? = 0,
     val totalResults: Int? = 0
 )
-data class RawRecipe(
-    val id: Int,
-    val title: String? = null,
-    val image: String? = null,
-    val imageType: String? = null
-)
 data class Recipe(
     val id: Int,
     val title: String,
     val imageUrl: String?,
+)
+
+data class Predict(
+    val id: Int,
+    val title: String
 )
 data class Ingredient(
     val id: Int,

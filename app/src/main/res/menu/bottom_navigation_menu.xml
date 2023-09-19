@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/appFragment"
+    android:id="@+id/triviaFragment"
+    android:enabled="true"
+    android:icon="@drawable/trivia"
+    android:title="@string/trivia"/>
+    <item
+        android:id="@+id/historyFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_home"
-        android:title="@string/home"/>
+        android:icon="@drawable/history"
+        android:title="@string/history"/>
     <item
         android:id="@+id/searchFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_button_nav_search"
+        android:icon="@drawable/search"
         android:title="@string/search_recipe"/>
     <item
         android:id="@+id/favFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_heart"
+        android:icon="@drawable/star"
         android:title="@string/favourites"/>
     <item
-        android:id="@+id/accFragment"
+        android:id="@+id/settingsFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_bottom_nav_trivia"
-        android:title="@string/acc"/>
+        android:icon="@drawable/settings"
+        android:title="@string/settings"/>
 </menu>

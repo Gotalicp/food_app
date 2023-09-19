@@ -1,22 +1,28 @@
 package com.example.food_app.api
 
 import com.example.food_app.data.ExtendedRecipe
+import com.example.food_app.data.Predict
+import com.example.food_app.data.PredictionAdapter
 import com.example.food_app.data.RawResult
 import com.example.food_app.data.Recipe
+import com.example.food_app.data.RecipeAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Query
 
-class RetrofitSpoonacular {
+class RetrofitSpoonacular: RetrofitService {
     companion object {
-        const val API_KEY = ""
-        const val API_HOST = "https://api.spoonacular.com/"
+        const val API_KEY = "ce49337c976545478fececd91b626e81"
+        const val API_HOST = "https://api.spoonacular.com/recipes/"
 
         private var api: RetrofitSpoonacular? = null
+
         fun getApi() = api  ?: RetrofitSpoonacular()
+        private var recipeAdapter = RecipeAdapter()
+        private var predictionAdapter = PredictionAdapter()
+
     }
 
     private val recipeApi: RecipeApi
@@ -30,36 +36,41 @@ class RetrofitSpoonacular {
         recipeApi = retrofit.create()
     }
 
-//    override suspend fun getRecipesByComplexSearch(query: String): List<Recipe>
-//    override suspend fun getRandomRecipe(): Recipe?
-//    override suspend fun getBulkRecipes(): List<ExtendedRecipe>?
-//    override suspend fun getSearchPrediciton(): List<String>?
+    override suspend fun getRecipesByComplexSearch(query: String, offset: Int): List<Recipe> = recipeApi.getRecipes(API_KEY, query ,offset).results.mapNotNull { recipeAdapter.adapt(it!!) }
+    override suspend fun getRandomRecipe(): Recipe? = recipeApi.getRandomRecipe(API_KEY).results.first()?.let { recipeAdapter.adapt(it) }
+    override suspend fun getTheRecipes(id: Int): ExtendedRecipe? = recipeApi.getTheRecipe(API_KEY,id)
+    override suspend fun getBulkRecipes(ids:String): List<ExtendedRecipe> = recipeApi.getBulkRecipe(API_KEY,ids)
+    override suspend fun getSearchPrediction(query:String): List<String>? = recipeApi.getPrediction(API_KEY,query).mapNotNull { predictionAdapter.adapt(it) }
 }
 
 interface RecipeApi {
-    @GET("search")
+    @GET("complexSearch")
     suspend fun getRecipes(
-        @Header("type") type: String,
         @Query("apiKey") apiKey: String,
         @Query("query") query: String,
-        @Query("number") number: Int = 1
+        @Query("offset") offset: Int,
+        @Query("number") number: Int = 6
     ): RawResult
     @GET("random")
     suspend fun getRandomRecipe(
         @Query("apiKey") apiKey: String,
         @Query("number") number: Int = 1
     ): RawResult
-    @GET("bulk")
+    @GET("information")
+    suspend fun getTheRecipe(
+        @Query("apiKey") apiKey: String,
+        @Query("id") id: Int
+    ): ExtendedRecipe
+    @GET("informationBulk")
     suspend fun getBulkRecipe(
-        @Header("type") type: String,
         @Query("apiKey") apiKey: String,
         @Query("ids") ids: String
     ): List<ExtendedRecipe>
 
-    @GET("prediction")
+    @GET("autocomplete")
     suspend fun getPrediction(
-        @Header("type") type:String,
         @Query("apiKey") apiKey: String,
-        @Query("text") text:String
-    ): List<String>
+        @Query("query") query:String,
+        @Query("number") number:Int = 5
+    ): List<Predict>
 }

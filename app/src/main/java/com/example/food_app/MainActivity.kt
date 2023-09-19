@@ -3,7 +3,6 @@ package com.example.food_app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,13 +14,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val fireBaseViewModel: FireBaseViewModel by viewModels()
+    private val fireBaseLoginViewModel: FireBaseLoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app)
         setUpNavigation()
-        fireBaseViewModel.logged.observe(this) {
-            Log.d("pog","${fireBaseViewModel.acc}")
+        fireBaseLoginViewModel.logged.observe(this) {
             if(it==false){
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()

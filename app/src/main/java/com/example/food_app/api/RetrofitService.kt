@@ -4,10 +4,11 @@ import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.Recipe
 
 
-interface RecipeApiService {
+interface RetrofitService {
 
-    suspend fun getRecipesByComplexSearch(query: String): List<Recipe>
+    suspend fun getRecipesByComplexSearch(query: String,offset:Int): List<Recipe>
     suspend fun getRandomRecipe(): Recipe?
-    suspend fun getBulkRecipes(): List<ExtendedRecipe>
-    suspend fun getSearchPrediciton(): List<String>?
+    suspend fun getBulkRecipes(ids: String): List<ExtendedRecipe>
+    suspend fun getTheRecipes(id: Int): ExtendedRecipe?
+    suspend fun getSearchPrediction(query:String): List<String>?
 }

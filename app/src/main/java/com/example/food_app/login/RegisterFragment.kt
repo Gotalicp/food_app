@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.food_app.FireBaseViewModel
+import com.example.food_app.FireBaseLoginViewModel
 import com.example.food_app.R
 import com.example.food_app.databinding.FragmentRegisterBinding
 
@@ -16,7 +16,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private var _binding: FragmentRegisterBinding?=null
     private val binding get() = _binding!!
 
-    private val fireBaseViewModel: FireBaseViewModel by activityViewModels()
+    private val fireBaseLoginViewModel: FireBaseLoginViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
             btnSignIn.setOnClickListener {
                 if (password.text.toString() != "" && repassword.text.toString() == password.text.toString() && email.text.toString() != "") {
-                    fireBaseViewModel.createAcc(
+                    fireBaseLoginViewModel.createAcc(
                         email.text.toString(),
                         password.text.toString(),
                         view

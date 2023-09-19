@@ -1,4 +1,4 @@
-package com.example.food_app.Search
+package com.example.food_app.search
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.food_app.R
 import com.example.food_app.data.Recipe
 
-class ResultAdapter(text:String): RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
+class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
     private val items = mutableListOf<Recipe>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
@@ -28,14 +28,12 @@ class ResultAdapter(text:String): RecyclerView.Adapter<ResultAdapter.ResultViewH
         private var imageView = view.findViewById<ImageView>(R.id.resultImageView)
         private val textView = view.findViewById<TextView>(R.id.resultTextView)
 
-
         fun bind(recipe: Recipe) {
-            Glide.with(textView)
+            Glide.with(imageView)
                 .load(recipe.imageUrl)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.error_image)
+                .placeholder(R.drawable.loading)
                 .centerCrop()
-                .into(holder)
+                .into(imageView)
 
             textView.text = recipe.title
         }

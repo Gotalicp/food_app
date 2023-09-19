@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.food_app.databinding.FragmentAppBinding
+import com.example.food_app.databinding.FragmentSettingsBinding
 
-class MainFragment : Fragment(R.layout.fragment_app) {
+class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
-    private var _binding: FragmentAppBinding?=null
+    private var _binding: FragmentSettingsBinding?=null
     private val binding get() = _binding!!
 
-    private val fireBaseViewModel: FireBaseViewModel by activityViewModels()
+    private val fireBaseLoginViewModel: FireBaseLoginViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -22,14 +22,14 @@ class MainFragment : Fragment(R.layout.fragment_app) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAppBinding.inflate(inflater,container,false)
+        _binding = FragmentSettingsBinding.inflate(inflater,container,false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             btnLogout.setOnClickListener {
-                fireBaseViewModel.logout()
+                fireBaseLoginViewModel.logout()
             }
         }
     }

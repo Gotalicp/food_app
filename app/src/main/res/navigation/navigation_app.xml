@@ -3,36 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_app"
-    app:startDestination="@id/appFragment">
-
+    app:startDestination="@id/searchFragment">
     <fragment
-        android:id="@+id/appFragment"
-        android:name="com.example.food_app.MainFragment"
-        android:label="fragment_app"
-        tools:layout="@layout/fragment_app">
-        <action
-            android:id="@+id/HomeToAcc"
-            app:destination="@id/accFragment" />
-        <action
-            android:id="@+id/HomeToFav"
-            app:destination="@+id/favFragment"/>
-        <action
-            android:id="@+id/HomeToSearch"
-            app:destination="@+id/searchFragment"/>
-    </fragment>
+        android:id="@+id/searchFragment"
+        android:name="com.example.food_app.search.SearchFragment"
+        android:label="SearchFragment" />
     <fragment
         android:id="@+id/favFragment"
         android:name="com.example.food_app.FavFragment"
         android:label="fragment_fav"
         tools:layout="@layout/fragment_fav" />
     <fragment
-        android:id="@+id/accFragment"
-        android:name="com.example.food_app.AccFragment"
-        android:label="fragment_acc"
-        tools:layout="@layout/fragment_acc" />
+        android:id="@+id/settingsFragment"
+        android:name="com.example.food_app.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.food_app.Search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/triviaFragment"
+        android:name="com.example.food_app.TriviaFragment"
+        android:label="fragment_trivia"
+        tools:layout="@layout/fragment_trivia" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.food_app.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

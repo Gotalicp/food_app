@@ -5,13 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainFragment">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:text="AppFragment" />
+    tools:context=".TriviaFragment">
 
     <Button
         android:id="@+id/btn_logout"
