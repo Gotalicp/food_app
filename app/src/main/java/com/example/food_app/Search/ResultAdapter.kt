@@ -36,7 +36,8 @@ class ResultAdapter(text:String): RecyclerView.Adapter<ResultAdapter.ResultViewH
                 .error(R.drawable.error_image)
                 .centerCrop()
                 .into(holder)
-        textView.apply { setRoundedCorners(20F) }
+
+            textView.text = recipe.title
         }
     }
 }
