@@ -1,10 +1,13 @@
-package com.example.food_app
+package com.example.food_app.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.food_app.FireBaseViewModel
+import com.example.food_app.MainActivity
+import com.example.food_app.R
 
 class LoginActivity: AppCompatActivity() {
 

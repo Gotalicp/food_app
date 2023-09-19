@@ -1,4 +1,4 @@
-package com.example.food_app
+package com.example.food_app.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.food_app.FireBaseViewModel
+import com.example.food_app.R
 import com.example.food_app.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
