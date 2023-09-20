@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.food_app.R
 import com.example.food_app.databinding.FragmentRecipeBinding
 import kotlinx.coroutines.launch
@@ -43,6 +44,12 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 if (it != null) { this.updateItems(it.steps) } } }
         }
         binding.apply {
+            Glide.with(recipeImage)
+                .load(recipeViewModel.recipe.value?.image)
+                .placeholder(R.drawable.loading)
+                .centerCrop()
+                .into(recipeImage)
+
             instructionsViewPager.apply {
                 adapter = recipeViewPagerAdapter
             }
