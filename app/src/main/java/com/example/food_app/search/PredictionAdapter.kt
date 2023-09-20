@@ -1,13 +1,11 @@
 package com.example.food_app.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.food_app.R
-import com.example.food_app.data.ExtendedRecipe
 
 class PredictionAdapter: RecyclerView.Adapter<PredictionAdapter.PredictionViewHolder>() {
 

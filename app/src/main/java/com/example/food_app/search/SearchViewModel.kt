@@ -23,7 +23,6 @@ class SearchViewModel(application: Application): AndroidViewModel(application){
 
     init {
         viewModelScope.launch {
-            Log.d("pog","triedRandomRecipe")
             _results.value = apiService.getRandomRecipes(6)
         }
     }
@@ -36,13 +35,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application){
 
     fun updateResults(query:String, offset:Int){
         viewModelScope.launch {
-            Log.d("tagg", _results.value.toString())
             _results.value = apiService.getRecipesByComplexSearch(query,offset)!!
-            Log.d("tagg", _results.value.toString())
         }
     }
-
-//    init {
-//        _results.value = apiService.
-//    }
 }

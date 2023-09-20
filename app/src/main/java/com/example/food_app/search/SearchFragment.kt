@@ -1,6 +1,8 @@
 package com.example.food_app.search
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food_app.R
 import com.example.food_app.data.ExtendedRecipe
-import com.example.food_app.data.Recipe
 import com.example.food_app.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
@@ -22,10 +23,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val searchViewModel: SearchViewModel by activityViewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +36,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val resultAdapter = ResultAdapter().apply {
-            itemClickListener = object : ItemClickListener<ExtendedRecipe>{
+            itemClickListener = object : ItemClickListener<ExtendedRecipe> {
                 override fun onItemClicked(item: ExtendedRecipe, itemPosition: Int) {
-                    findNavController().navigate(R.id.SearchToRecipe)
+                    val bundle:Bundle? = Bundle()
+                    bundle.let { it?.putInt("id", item.id!!) }
+                    findNavController().navigate(R.id.SearchToRecipe, bundle)
                 }
             }
         }
@@ -61,18 +61,22 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 adapter = resultAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
             }
-
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     if(query!=null) {
                         searchViewModel.updateResults(query, 0)
                         text.text="Results"
+                        searchView.setQuery(null,false )
+                        searchView.clearFocus()
                     }
                     return true
                 }
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    handler.removeCallbacksAndMessages(null)
                     if (!newText.isNullOrEmpty()) {
-                        searchViewModel.updatePrediction(newText)
+                        handler.postDelayed({
+                            searchViewModel.updatePrediction(newText)
+                        }, 1000)
                     }else{
                         predictionsView.visibility = View.GONE
                         suggestionsText.visibility = View.GONE
