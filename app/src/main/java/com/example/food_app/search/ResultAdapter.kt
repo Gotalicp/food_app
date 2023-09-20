@@ -8,13 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.food_app.R
-import com.example.food_app.data.Recipe
+import com.example.food_app.data.ExtendedRecipe
 
 class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
 
-    private var items = mutableListOf<Recipe>()
+    private var items = mutableListOf<ExtendedRecipe>()
 
-    var itemClickListener: ItemClickListener<Recipe>? = null
+    var itemClickListener: ItemClickListener<ExtendedRecipe>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -23,7 +23,7 @@ class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
     }
 
     override fun getItemCount() = items.size
-    fun updateItems(list: List<Recipe>){
+    fun updateItems(list: List<ExtendedRecipe>){
         items = list.toMutableList()
         notifyDataSetChanged()
     }
@@ -35,9 +35,9 @@ class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
         private var imageView = view.findViewById<ImageView>(R.id.resultImageView)
         private val textView = view.findViewById<TextView>(R.id.resultTextView)
 
-        fun bind(recipe: Recipe) {
+        fun bind(recipe: ExtendedRecipe) {
             Glide.with(imageView)
-                .load(recipe.imageUrl)
+                .load(recipe.image)
                 .placeholder(R.drawable.loading)
                 .centerCrop()
                 .into(imageView)

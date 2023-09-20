@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val fireBaseLoginViewModel: FireBaseLoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_app)
         setUpNavigation()
         fireBaseLoginViewModel.logged.observe(this) {

@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.food_app.R
+import com.example.food_app.data.ExtendedRecipe
 
 class PredictionAdapter: RecyclerView.Adapter<PredictionAdapter.PredictionViewHolder>() {
 
     private var items: List<String> = mutableListOf()
+
+    var itemClickListener: ItemClickListener<String>? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PredictionViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -33,6 +37,12 @@ class PredictionAdapter: RecyclerView.Adapter<PredictionAdapter.PredictionViewHo
 
         fun bind(text:String) {
             textView.text = text
+            textView.setOnClickListener {
+                itemClickListener?.onItemClicked(text, absoluteAdapterPosition)
+            }
         }
+    }
+    interface ItemClickListener<T> {
+        fun onItemClicked(item: T, itemPosition: Int)
     }
 }

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food_app.R
+import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.Recipe
 import com.example.food_app.databinding.FragmentSearchBinding
 
@@ -37,19 +38,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val resultAdapter = ResultAdapter().apply {
-            itemClickListener = object : ItemClickListener<Recipe>{
-                override fun onItemClicked(item: Recipe, itemPosition: Int) {
+            itemClickListener = object : ItemClickListener<ExtendedRecipe>{
+                override fun onItemClicked(item: ExtendedRecipe, itemPosition: Int) {
                     findNavController().navigate(R.id.SearchToRecipe)
                 }
             }
         }
-        val predictionAdapter = PredictionAdapter()
+
         _binding?.apply {
+            val predictionAdapter = PredictionAdapter().apply {
+                itemClickListener = object : PredictionAdapter.ItemClickListener<String> {
+                    override fun onItemClicked(item: String, itemPosition: Int) {
+                        searchView.setQuery(item,false)
+                    }
+                }
+            }
             predictionsView.apply {
                 adapter = predictionAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
-
             resultsRecyclerView.apply {
                 adapter = resultAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
