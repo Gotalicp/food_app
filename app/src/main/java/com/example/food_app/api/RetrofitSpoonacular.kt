@@ -32,23 +32,9 @@ class RetrofitSpoonacular: RetrofitService {
     private val cache = Cache()
     inner class Cache {
         private var recipeCache: MutableList<ExtendedRecipe>? = mutableListOf()
-
         suspend fun getTheRecipes(id: Int) = recipeCache?.find{ it.id == id } ?:
         recipeApi.getTheRecipe(id, API_KEY).apply{ recipeCache?.add(this) }
 
-        suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe):ExtendedRecipe? = recipeCache?.find { it.id == recipe.id && it.analyzedRecipe!=null } ?: recipe.apply {
-                analyzedRecipe = recipeApi.getAnalyzedRecipe(recipe.id!!, API_KEY)}
-
-        suspend fun getRandomRecipes(number: Int):List<ExtendedRecipe>? = recipeApi.getRandomRecipe(API_KEY, number).recipes?.mapNotNull {
-            extendedRecipeAdapter.adapt(it!!) }
-            .also { recipeCache?.addAll(it!!) }
-
-        suspend fun getBulkRecipes(ids:List<Int>): List<ExtendedRecipe> = recipeApi.getBulkRecipe(API_KEY, iDSAdapter.adapt(ids)!!)
-            .also { recipeCache?.addAll(it) }
-
-        suspend fun getRecipesByComplexSearch(query: String, offset: Int): List<ExtendedRecipe> = recipeApi.getRecipes(API_KEY, query ,offset)
-            .results.mapNotNull { recipeAdapter.adapt(it!!) }
-            .also { recipeCache?.addAll(it) }
         fun invalidate() {
            recipeCache = null
         }
@@ -64,13 +50,12 @@ class RetrofitSpoonacular: RetrofitService {
         recipeApi = retrofit.create()
     }
 
-    override suspend fun getRecipesByComplexSearch(query: String, offset: Int): List<ExtendedRecipe> = cache.getRecipesByComplexSearch(query,offset)
-    override suspend fun getRandomRecipes(number: Int): List<ExtendedRecipe>? = cache.getRandomRecipes(number)
+    override suspend fun getRecipesByComplexSearch(query: String, offset: Int): List<ExtendedRecipe> = recipeApi.getRecipes(API_KEY, query ,offset).results.mapNotNull { recipeAdapter.adapt(it!!) }
+    override suspend fun getRandomRecipes(number: Int): List<ExtendedRecipe>? = recipeApi.getRandomRecipe(API_KEY, number).recipes?.mapNotNull { extendedRecipeAdapter.adapt(it!!) }
     override suspend fun getTheRecipes(id: Int): ExtendedRecipe? = cache.getTheRecipes(id)
-    override suspend fun getBulkRecipes(ids:List<Int>): List<ExtendedRecipe> = cache.getBulkRecipes(ids)
+    override suspend fun getBulkRecipes(ids:List<Int>): List<ExtendedRecipe> = recipeApi.getBulkRecipe(API_KEY, iDSAdapter.adapt(ids)!!)
     override suspend fun getSearchPrediction(query:String): List<String>? = recipeApi.getPrediction(API_KEY,query).mapNotNull { predictionAdapter.adapt(it) }
-    override suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe): ExtendedRecipe = cache.getAnalyzedRecipe(recipe)!!
-}
+    override suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe): ExtendedRecipe = recipe.apply { analyzedRecipe = recipeApi.getAnalyzedRecipe(recipe.id!!, API_KEY)}
 
 interface RecipeApi {
     @GET("complexSearch")
