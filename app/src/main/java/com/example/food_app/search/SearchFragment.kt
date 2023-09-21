@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -38,9 +39,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val resultAdapter = ResultAdapter().apply {
             itemClickListener = object : ItemClickListener<ExtendedRecipe> {
                 override fun onItemClicked(item: ExtendedRecipe, itemPosition: Int) {
-                    val bundle:Bundle? = Bundle()
-                    bundle.let { it?.putInt("id", item.id!!) }
-                    findNavController().navigate(R.id.SearchToRecipe, bundle)
+                    findNavController().navigate(R.id.SearchToRecipe, bundleOf("id" to item.id))
                 }
             }
         }
@@ -67,6 +66,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         searchViewModel.updateResults(query, 0)
                         text.text="Results"
                         searchView.setQuery(null,false )
+                        searchViewModel.changeState(View.GONE)
                         searchView.clearFocus()
                     }
                     return true
@@ -75,23 +75,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     handler.removeCallbacksAndMessages(null)
                     if (!newText.isNullOrEmpty()) {
                         handler.postDelayed({
+                            searchViewModel.changeState(View.VISIBLE)
                             searchViewModel.updatePrediction(newText)
                         }, 1000)
                     }else{
-                        predictionsView.visibility = View.GONE
-                        suggestionsText.visibility = View.GONE
+                        searchViewModel.changeState(View.GONE)
                     }
                     return true
                 }
             })
 
             searchViewModel.prediction.observe(viewLifecycleOwner){
-                _binding!!.predictionsView.visibility = View.VISIBLE
-                _binding!!.suggestionsText.visibility = View.VISIBLE
                 predictionAdapter.updateItems(it)
             }
             searchViewModel.results.observe(viewLifecycleOwner){
                 resultAdapter.updateItems(it)
+            }
+            searchViewModel.predictionState.observe(viewLifecycleOwner){
+                predictionsView.visibility = it
+                suggestionsText.visibility = it
             }
 
         }

@@ -1,7 +1,5 @@
 package com.example.food_app.data
 
-import android.health.connect.datatypes.units.Length
-
 data class RawResult(
     val results: List<Recipe?> = emptyList(),
     val offset: Int? = 0,
@@ -35,7 +33,10 @@ data class ExtendedRecipe(
     val readyInMinutes: String?=null,
     val extendedIngredients: List<Ingredient>?= mutableListOf(),
     val summary: String?=null,
-    var analyzedRecipe:List<AnalyzedRecipe>?=null
+    var analyzedRecipe:List<AnalyzedRecipe>?=null,
+    var isAnalyzed: Boolean = false,
+    var isFavoured: Boolean = false,
+    var isLiked: Boolean = false
 )
 data class AnalyzedRecipe(
     val name:String?=null,

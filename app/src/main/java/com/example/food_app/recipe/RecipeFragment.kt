@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.food_app.R
+import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.databinding.FragmentRecipeBinding
-import kotlinx.coroutines.launch
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
@@ -22,7 +21,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recipeViewModel.updateRecipe(arguments?.getInt("id")!!)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,22 +32,22 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recipeViewModel.updateRecipe(arguments?.getInt("id")!!)
+
         val ingredientAdapter = IngredientAdapter()
         val recipeViewPagerAdapter = RecipeViewPagerAdapter()
         recipeViewModel.recipe.observe(viewLifecycleOwner){
-            ingredientAdapter.apply {
+                Glide.with(binding.recipeImage)
+                    .load(recipeViewModel.recipe.value?.image)
+                    .centerCrop()
+                    .into(binding.recipeImage)
+                ingredientAdapter.apply {
             recipeViewModel.recipe.value?.extendedIngredients?.let { this.updateItems(it) } }
             recipeViewPagerAdapter.apply {
             recipeViewModel.recipe.value?.analyzedRecipe?.get(0).let {
                 if (it != null) { this.updateItems(it.steps) } } }
         }
         binding.apply {
-            Glide.with(recipeImage)
-                .load(recipeViewModel.recipe.value?.image)
-                .placeholder(R.drawable.loading)
-                .centerCrop()
-                .into(recipeImage)
-
             instructionsViewPager.apply {
                 adapter = recipeViewPagerAdapter
             }
@@ -57,6 +55,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 adapter = ingredientAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
+            likeButton.setOnClickListener{
+
+            }
+            favoriteButton.setOnClickListener{
+
+            }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        recipeViewModel.clearRecipe()
     }
 }

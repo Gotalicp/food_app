@@ -32,7 +32,7 @@ class RecipeViewPagerAdapter: RecyclerView.Adapter<RecipeViewPagerAdapter.Pager2
     inner class Pager2ViewHolder(private val binding: InstructionsViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(instruction: Step) {
-            binding.instruction.text = "Step ${instruction.step}"
+            binding.instruction.text = "${instruction.step}"
             binding.stepCounter.text = instruction.number.toString()
         }
     }

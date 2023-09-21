@@ -35,6 +35,16 @@ class RetrofitSpoonacular: RetrofitService {
         suspend fun getTheRecipes(id: Int) = recipeCache?.find{ it.id == id } ?:
         recipeApi.getTheRecipe(id, API_KEY).apply{ recipeCache?.add(this) }
 
+        suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe) = recipeCache?.find{ it.id == recipe.id && it.isAnalyzed } ?:
+        recipe.apply {
+            analyzedRecipe = recipeApi.getAnalyzedRecipe(recipe.id!!, API_KEY)
+            isAnalyzed = true
+        }.also { updateCache(recipe) }
+
+        suspend fun updateCache(recipe : ExtendedRecipe){
+            recipeCache?.find { it.id == recipe.id }.apply{ recipeCache!![(recipeCache!!.indexOf(this))] = recipe }?:
+            recipeCache?.add(recipe)
+        }
         fun invalidate() {
            recipeCache = null
         }
@@ -55,8 +65,7 @@ class RetrofitSpoonacular: RetrofitService {
     override suspend fun getTheRecipes(id: Int): ExtendedRecipe? = cache.getTheRecipes(id)
     override suspend fun getBulkRecipes(ids:List<Int>): List<ExtendedRecipe> = recipeApi.getBulkRecipe(API_KEY, iDSAdapter.adapt(ids)!!)
     override suspend fun getSearchPrediction(query:String): List<String>? = recipeApi.getPrediction(API_KEY,query).mapNotNull { predictionAdapter.adapt(it) }
-    override suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe): ExtendedRecipe = recipe.apply { analyzedRecipe = recipeApi.getAnalyzedRecipe(recipe.id!!, API_KEY)}
-
+    override suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe): ExtendedRecipe = cache.getAnalyzedRecipe(recipe)
 interface RecipeApi {
     @GET("complexSearch")
     suspend fun getRecipes(
@@ -93,4 +102,4 @@ interface RecipeApi {
         @Path("id") query: Int,
         @Query("apiKey") apiKey: String
     ): List<AnalyzedRecipe>
-}
+}}
