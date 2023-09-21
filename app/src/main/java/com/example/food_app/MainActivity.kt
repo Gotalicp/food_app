@@ -14,13 +14,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val fireBaseLoginViewModel: FireBaseLoginViewModel by viewModels()
+    private val fireBaseViewModel: FireBaseViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_app)
         setUpNavigation()
-        fireBaseLoginViewModel.logged.observe(this) {
+        fireBaseViewModel.logged.observe(this) {
             if(it==false){
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()

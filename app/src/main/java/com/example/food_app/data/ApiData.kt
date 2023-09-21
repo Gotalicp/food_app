@@ -1,17 +1,11 @@
 package com.example.food_app.data
 
 data class RawResult(
-    val results: List<Recipe?> = emptyList(),
+    val results: List<ExtendedRecipe?> = emptyList(),
     val offset: Int? = 0,
     val number: Int? = 0,
     val totalResults: Int? = 0,
     val recipes: List<ExtendedRecipe>? = emptyList()
-)
-
-data class Recipe(
-    val id: Int?=null,
-    val title: String?= null,
-    val image: String?=null
 )
 data class Predict(
     val id: Int?=null,
@@ -36,7 +30,8 @@ data class ExtendedRecipe(
     var analyzedRecipe:List<AnalyzedRecipe>?=null,
     var isAnalyzed: Boolean = false,
     var isFavoured: Boolean = false,
-    var isLiked: Boolean = false
+    var isLiked: Boolean = false,
+    var likes: Int = 0
 )
 data class AnalyzedRecipe(
     val name:String?=null,

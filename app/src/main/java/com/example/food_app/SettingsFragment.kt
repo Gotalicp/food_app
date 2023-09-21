@@ -13,7 +13,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var _binding: FragmentSettingsBinding?=null
     private val binding get() = _binding!!
 
-    private val fireBaseLoginViewModel: FireBaseLoginViewModel by activityViewModels()
+    private val fireBaseViewModel: FireBaseViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -29,7 +29,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             btnLogout.setOnClickListener {
-                fireBaseLoginViewModel.logout()
+                fireBaseViewModel.logout()
+            }
+            btnRead.setOnClickListener{
             }
         }
     }

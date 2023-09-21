@@ -1,8 +1,6 @@
 package com.example.food_app.api
 
 import com.example.food_app.data.ExtendedRecipe
-import com.example.food_app.data.Recipe
-
 
 interface RetrofitService {
 
