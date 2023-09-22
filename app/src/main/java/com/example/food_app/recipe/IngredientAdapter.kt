@@ -1,5 +1,6 @@
 package com.example.food_app.recipe
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class IngredientAdapter: RecyclerView.Adapter<IngredientAdapter.IngredientViewHo
         return items.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(list: List<Ingredient>){
         items = list
         notifyDataSetChanged()

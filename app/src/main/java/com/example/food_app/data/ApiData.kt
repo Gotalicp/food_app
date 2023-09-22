@@ -29,7 +29,6 @@ data class ExtendedRecipe(
     val summary: String?=null,
     var analyzedRecipe:List<AnalyzedRecipe>?=null,
     var isAnalyzed: Boolean = false,
-    var isFavoured: Boolean = false,
     var isLiked: Boolean = false,
     var likes: Int = 0
 )

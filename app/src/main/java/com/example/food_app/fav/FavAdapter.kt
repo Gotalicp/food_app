@@ -12,29 +12,28 @@ import com.example.food_app.R
 import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.ItemClickListener
 
-class ResultAdapter: RecyclerView.Adapter<ResultAdapter.ResultViewHolder>() {
+class FavAdapter: RecyclerView.Adapter<FavAdapter.FavViewHolder>() {
 
     private var items = mutableListOf<ExtendedRecipe>()
 
     var itemClickListener: ItemClickListener<ExtendedRecipe>? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.search_result_view, parent, false)
-        return ResultViewHolder(itemView)
+            .inflate(R.layout.fav_view, parent, false)
+        return FavViewHolder(itemView)
     }
 
     override fun getItemCount() = items.size
-    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(list: List<ExtendedRecipe>){
         items = list.toMutableList()
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
         holder.bind(items[position])
     }
-    inner class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class FavViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var imageView = view.findViewById<ImageView>(R.id.resultImageView)
         private val textView = view.findViewById<TextView>(R.id.resultTextView)
 

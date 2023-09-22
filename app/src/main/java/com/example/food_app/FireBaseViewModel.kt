@@ -1,46 +1,43 @@
 package com.example.food_app
 
-import android.app.Application
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.food_app.data.Accounts
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.food_app.data.Account
+import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.FireBaseAdapter
+import com.example.food_app.data.FireFavDataBaseAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
-class FireBaseViewModel (application:Application): AndroidViewModel(application){
-
+class FireBaseViewModel: ViewModel() {
     private var currentUser = Firebase.auth.currentUser
-    private  var database = Firebase.database
 
-    private val _acc = MutableLiveData<Accounts>()
-    val acc: LiveData<Accounts> get() = _acc
+    private val fireBaseAdapter = FireBaseAdapter()
+    private val fireFavDataBaseAdapter = FireFavDataBaseAdapter()
+
+    private val _acc = MutableLiveData<Account>()
+    val acc: LiveData<Account> get() = _acc
 
     private val _logged = MutableLiveData<Boolean>()
     val logged: LiveData<Boolean> get() = _logged
 
-    private val fireBaseAdapter = FireBaseAdapter()
-
     init {
         if(currentUser==null){
-            _acc.value = Accounts(null,null,null)
+            _acc.value = Account(null,null,null)
             _logged.value = false
         } else {
          _acc.value= currentUser.let { fireBaseAdapter.adapt(it) }
             _logged.value = true
         }
-        database.reference.setValue(listOf(Accounts("nani","naai",null),Accounts("a","e",null)))
-        database.reference.get().addOnCompleteListener{
-            Log.d("firebase",it.result.toString())
-        }
-
     }
-    fun emtpyUser() :Boolean{
+    fun emptyUser() :Boolean{
         if (currentUser == null) {
             return true
         }
@@ -54,14 +51,14 @@ class FireBaseViewModel (application:Application): AndroidViewModel(application)
                     updateAcc(currentUser.let { fireBaseAdapter.adapt(it)!! })
                     Snackbar.make(
                         context,
-                        "Authentication success.",
+                        "Register success.",
                         Snackbar.LENGTH_SHORT,
                     ).show()
                 } else {
-                    updateAcc(Accounts(null,null,null))
+                    updateAcc(Account(null,null,null))
                     Snackbar.make(
                         context,
-                        "Authentication failed.",
+                        "Register failed.",
                         Snackbar.LENGTH_SHORT,
                     ).show()
                 }
@@ -75,26 +72,45 @@ class FireBaseViewModel (application:Application): AndroidViewModel(application)
                     updateAcc(currentUser.let { fireBaseAdapter.adapt(it)!! })
                     Snackbar.make(
                         context,
-                        "Authentication success.",
+                        "Login success.",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 } else {
-                    updateAcc(Accounts(null,null,null))
+                    updateAcc(Account(null,null,null))
                     Snackbar.make(
                         context,
-                        "Authentication failed.",
+                        "Login failed.",
                         Snackbar.LENGTH_SHORT
                     ).show()
                     logout()
                 }
             }
     }
-    private fun updateAcc(it: Accounts){
+    private fun updateAcc(it: Account){
         _acc.value = it
     }
     fun logout(){
         Firebase.auth.signOut()
-        updateAcc(Accounts(null,null,null))
+        updateAcc(Account(null,null,null))
         _logged.value=false
+    }
+    fun getFav(callback: (MutableList<ExtendedRecipe>) -> Unit) {
+        var uid = Firebase.auth.currentUser?.uid
+        Firebase.database.getReference("user/${uid}").get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot != null) {
+                val result = fireFavDataBaseAdapter.adapt(documentSnapshot)
+                Log.d("firebase"," text $result")
+                callback(result ?: mutableListOf())
+            } else {
+                callback(mutableListOf())
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("firebase", "Error getting data", exception)
+            callback(mutableListOf())
+        }
+    }
+    fun uploadFav(list: MutableList<ExtendedRecipe>){
+        var uid = Firebase.auth.currentUser?.uid
+        Firebase.database.getReference("user/${uid}").setValue(list)
     }
 }

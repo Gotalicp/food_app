@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.food_app.R
 import com.example.food_app.data.ExtendedRecipe
+import com.example.food_app.data.ItemClickListener
 import com.example.food_app.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment(R.layout.fragment_search) {

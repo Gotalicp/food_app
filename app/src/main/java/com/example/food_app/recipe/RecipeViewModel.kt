@@ -25,14 +25,20 @@ class RecipeViewModel (application: Application): AndroidViewModel(application){
     fun clearRecipe(){
         _recipe.postValue(ExtendedRecipe())
     }
-
-    private val _isLiked = MutableLiveData<Boolean>()
-    val isLiked: LiveData<Boolean> get() = _isLiked
-
-    fun chageLikedState(){
-        _isLiked.postValue(!_isLiked.value!!)
+    fun changeFavState(){
+     if(checkInFav()){
+         apiService.removeFromFav(_recipe.value!!)
+     }else{
+         apiService.addToFav(_recipe.value!!)
+     }
+        _recipe.postValue(_recipe.value)
     }
 
-    private val _isFavoured = MutableLiveData<Boolean>()
-    val isFavoured: LiveData<Boolean> get() = _isFavoured
+    fun checkInFav() = apiService.checkInFav(_recipe.value!!)
+    fun changeLikeState(){
+        val temp = _recipe.value
+        temp?.isLiked = !temp?.isLiked!!
+        _recipe.value = temp!!
+
+    }
 }

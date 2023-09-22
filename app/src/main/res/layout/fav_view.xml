@@ -18,7 +18,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/filllike"
-        android:contentDescription="Top Right Image"/>
+            android:contentDescription="Top Right Image"/>
 
         <TextView
             android:id="@+id/topRightTextView"
@@ -33,14 +33,14 @@
         android:layout_width="match_parent"
         android:id="@+id/constraint"
         android:layout_height="wrap_content">/>
-    <ImageView
-        android:id="@+id/resultImageView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_centerInParent="true"
-        android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1:1"
-        tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/resultImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/resultTextView"
