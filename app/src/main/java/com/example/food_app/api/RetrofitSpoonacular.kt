@@ -9,7 +9,6 @@ import com.example.food_app.data.PredictionAdapter
 import com.example.food_app.data.RawResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -67,9 +66,8 @@ class RetrofitSpoonacular: RetrofitService {
             fireBaseViewModel.uploadFav(favCache)
         }
 
-        fun invalidate() {
+        fun killFav() {
             favCache = mutableListOf()
-            recipeCache = mutableListOf()
         }
     }
 
@@ -93,6 +91,7 @@ class RetrofitSpoonacular: RetrofitService {
     fun checkInFav(recipe:ExtendedRecipe):Boolean = cache.checkInFav(recipe)
     fun removeFromFav(recipe:ExtendedRecipe) = cache.removeFromFav(recipe)
     fun addToFav(recipe:ExtendedRecipe) = cache.addToFav(recipe)
+    fun killFav() = cache.killFav()
 
 interface RecipeApi {
     @GET("complexSearch")

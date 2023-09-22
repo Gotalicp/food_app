@@ -6,8 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.food_app.data.ExtendedRecipe
-import com.example.recipe_app.getApiService
-import kotlinx.coroutines.delay
+import com.example.food_app.getApiService
 import kotlinx.coroutines.launch
 
 class RecipeViewModel (application: Application): AndroidViewModel(application){

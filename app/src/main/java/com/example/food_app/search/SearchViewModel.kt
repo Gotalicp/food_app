@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.food_app.data.ExtendedRecipe
-import com.example.recipe_app.getApiService
+import com.example.food_app.getApiService
 import kotlinx.coroutines.launch
 
 class SearchViewModel(application: Application): AndroidViewModel(application) {
@@ -40,7 +40,6 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
             _prediction.value = apiService.getSearchPrediction(query)!!
         }
     }
-
     fun updateResults(query: String, offset: Int) {
         viewModelScope.launch {
             _results.value = apiService.getRecipesByComplexSearch(query, offset)!!

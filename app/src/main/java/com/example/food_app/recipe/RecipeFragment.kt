@@ -11,10 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.food_app.FireBaseViewModel
 import com.example.food_app.R
-import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.databinding.FragmentRecipeBinding
-import com.example.recipe_app.getApiService
-import kotlinx.coroutines.CoroutineScope
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 

@@ -22,8 +22,6 @@ class FavFragment : Fragment(R.layout.fragment_fav) {
     private val binding get() = _binding!!
 
     private val favViewModel: FavViewModel by activityViewModels()
-    private var fireBaseViewModel = FireBaseViewModel()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         favViewModel.getFav()
