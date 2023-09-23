@@ -2,6 +2,7 @@ package com.example.food_app.history
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,11 +20,14 @@ class HistoryViewModel(application: Application): AndroidViewModel(application) 
 
     init {
         _cache.postValue(getRecipeList())
+        Log.d("adding",_cache.value.toString())
     }
     fun addToHistory(recipe: ExtendedRecipe) {
+        Log.d("adding","$recipe")
         val currentCache = _cache.value ?: ArrayList()
-        if (recipe.extendedIngredients?.isNotEmpty() == true) {
+        if (recipe.id != null && cache.value?.find { it.id == recipe.id }==null) {
             currentCache.add(recipe)
+            Log.d("adding","$recipe")
             _cache.postValue(currentCache)
             _cache.value?.let { saveRecipeList(it) }
         }
@@ -38,7 +42,7 @@ class HistoryViewModel(application: Application): AndroidViewModel(application) 
             val type = object : TypeToken<ArrayList<ExtendedRecipe>>() {}.type
             Gson().fromJson(json, type)
         } else {
-            null
+            ArrayList()
         }
     }
     fun clearRecipeList() {

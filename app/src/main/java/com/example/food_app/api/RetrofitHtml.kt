@@ -7,7 +7,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import kotlin.coroutines.resume
@@ -16,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class HtmlRetrofitService : HtmlService {
     companion object {
-        const val API_KEY = "da56f65f2b7945b3ac1425493af40362"
+        const val API_KEY = ""
         const val API_HOST = "https://api.spoonacular.com/"
 
         private var html: HtmlRetrofitService? = null
