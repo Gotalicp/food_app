@@ -4,7 +4,6 @@ data class RawResult(
     val results: List<ExtendedRecipe?> = emptyList(),
     val offset: Int? = 0,
     val number: Int? = 0,
-    val totalResults: Int? = 0,
     val recipes: List<ExtendedRecipe>? = emptyList()
 )
 data class Predict(
@@ -29,7 +28,8 @@ data class ExtendedRecipe(
     val summary: String?=null,
     var analyzedRecipe:MutableList<AnalyzedRecipe>?=null,
     var isLiked: Boolean = false,
-    var likes: Int = 0
+    var likes: Int = 0,
+    var tasteWidget:String? = null
 )
 data class AnalyzedRecipe(
     val steps: MutableList<Step>
@@ -38,9 +38,21 @@ data class Step(
     val number: Int?=null,
     val step: String?=null,
 )
-data class FoodItem(
+
+data class Annotation(
     val annotation: String,
+    val image: String,
+    val tag: String
 )
-data class RandomFoodTriviaResponse(
-    val text: String? = null
+
+data class ApiAnnotations(
+    var annotations: List<Annotation>
 )
+data class ApiText(
+    val text: String=""
+)
+data class Trivia(
+    val text: String="",
+    var annotations: List<Annotation>
+)
+

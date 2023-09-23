@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.food_app.databinding.FragmentTriviaBinding
 
 class TriviaFragment : Fragment() {
@@ -27,15 +28,14 @@ class TriviaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             btnTrivia.setOnClickListener {
-                title.text = "Trivia"
-                triviaViewModel.getTrivia()
-                text.text = triviaViewModel.text.value
+                triviaViewModel.getTrivia(findNavController())
             }
             btnJoke.setOnClickListener {
-                triviaViewModel.getJoke()
-                title.text = "Joke"
-                text.text = triviaViewModel.text.value
+                triviaViewModel.getJoke(findNavController())
             }
+        }
+        triviaViewModel.text.observe(viewLifecycleOwner){
+            triviaViewModel.updateScreen(binding)
         }
     }
 }

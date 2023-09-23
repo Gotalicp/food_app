@@ -31,15 +31,23 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.food_app.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/SettingToPolicy"
+            app:destination="@id/privacyPolicyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/triviaFragment"
         android:name="com.example.food_app.trivia.TriviaFragment"
         android:label="fragment_trivia"
-        tools:layout="@layout/fragment_trivia" />
+        tools:layout="@layout/fragment_trivia" >
+        <action
+            android:id="@+id/TriviaToSearch"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.example.food_app.HistoryFragment"
+        android:name="com.example.food_app.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
@@ -49,15 +57,13 @@
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.food_app.recipe.RecipeFragment"
-        android:label="RecipeFragment" >
+        android:label="RecipeFragment" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.food_app.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment" >
         <action
-            android:id="@+id/RecipeToSearch"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/RecipeToFav"
-            app:destination="@id/favFragment" />
-        <action
-            android:id="@+id/RecipeToHistory"
-            app:destination="@id/historyFragment" />
+            android:id="@+id/action_privacyPolicyFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.food_app.FireBaseViewModel
 import com.example.food_app.R
 import com.example.food_app.databinding.FragmentSettingsBinding
@@ -34,13 +35,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 settingViewModel.logout()
             }
             policyButton.setOnClickListener{
-
+                findNavController().navigate(R.id.SettingToPolicy)
             }
             userButton.setOnClickListener{
 
             }
             themesButton.setOnClickListener {
-
             }
         }
     }

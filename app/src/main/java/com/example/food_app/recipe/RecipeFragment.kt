@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.food_app.FireBaseViewModel
 import com.example.food_app.R
 import com.example.food_app.databinding.FragmentRecipeBinding
+import com.example.food_app.history.HistoryViewModel
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
@@ -22,6 +20,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private val binding get() = _binding!!
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
+    private val historyViewModel: HistoryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,30 +33,27 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recipeViewModel.updateRecipe(arguments?.getInt("id")!!)
-
+        recipeViewModel.updateTasteWidget(id,binding)
         val ingredientAdapter = IngredientAdapter()
         val recipeViewPagerAdapter = RecipeViewPagerAdapter()
-
         binding.apply {
-        recipeViewModel.recipe.observe(viewLifecycleOwner){
-            Log.d("firebase", "datachanged")
+        recipeViewModel.recipe.observe(viewLifecycleOwner){ recipe ->
+            historyViewModel.addToHistory(recipe)
             Glide.with(recipeImage)
-                .load(it.image)
+                .load(recipe.image)
                 .centerCrop()
                 .optionalCenterCrop()
                 .into(binding.recipeImage)
-
             ingredientAdapter.apply {
-                it.extendedIngredients?.let { this.updateItems(it) } }
+                recipe.extendedIngredients?.let { this.updateItems(it) } }
 
             recipeViewPagerAdapter.apply {
-                it.analyzedRecipe?.first().let {
+                recipe.analyzedRecipe?.first().let {
                     if (it != null) { this.updateItems(it.steps) } } }
 
             if(recipeViewModel.checkInFav()){
                 favoriteButton.setImageResource(R.drawable.addfav)
             }else{favoriteButton.setImageResource(R.drawable.emptyfav)}
-
             }
             instructionsViewPager.apply {
                 adapter = recipeViewPagerAdapter
@@ -77,7 +73,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         recipeViewModel.clearRecipe()

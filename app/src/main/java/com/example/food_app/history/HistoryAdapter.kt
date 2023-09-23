@@ -1,4 +1,4 @@
-package com.example.food_app.fav
+package com.example.food_app.history
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -11,30 +11,29 @@ import com.bumptech.glide.Glide
 import com.example.food_app.R
 import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.ItemClickListener
+class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
-class FavAdapter: RecyclerView.Adapter<FavAdapter.FavViewHolder>() {
-
-    private var items = mutableListOf<ExtendedRecipe>()
+    private var items = ArrayList<ExtendedRecipe>()
 
     var itemClickListener: ItemClickListener<ExtendedRecipe>? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.search_result_view, parent, false)
-        return FavViewHolder(itemView)
+        return HistoryViewHolder(itemView)
     }
 
     override fun getItemCount() = items.size
     @SuppressLint("NotifyDataSetChanged")
-    fun updateItems(list: List<ExtendedRecipe>){
-        items = list.toMutableList()
+    fun updateItems(list: ArrayList<ExtendedRecipe>){
+        items = list
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.bind(items[position])
     }
-    inner class FavViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var imageView = view.findViewById<ImageView>(R.id.resultImageView)
         private val textView = view.findViewById<TextView>(R.id.resultTextView)
 

@@ -2,83 +2,48 @@ package com.example.food_app.trivia
 
 import android.app.Application
 import android.text.SpannableString
-import android.text.style.ClickableSpan
+import android.text.method.LinkMovementMethod
 import android.util.Log
-import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.food_app.R
+import com.example.food_app.data.TriviaJokeAdapter
+import com.example.food_app.databinding.FragmentTriviaBinding
 import com.example.food_app.getApiService
 import kotlinx.coroutines.launch
 
 class TriviaViewModel (application: Application): AndroidViewModel(application){
     private val apiService = application.getApiService()
+    private  val adapter = TriviaJokeAdapter()
 
     private val _text = MutableLiveData<SpannableString>()
     val text: LiveData<SpannableString> get() = _text
 
-    fun getTrivia(){
+    fun getTrivia(navController:NavController){
         viewModelScope.launch {
-            val temp = apiService.getRandomTrivia()
-            val list = apiService.getTexts(temp.text!!).map { word ->
-                ClickableWord(word.annotation) { clickedWord ->
-                    Log.d("word","$clickedWord")
-                }
+            adapter.setOnSpanClickListener {annotation->
+                Log.d("clicked", annotation)
+                navController.navigate(R.id.TriviaToSearch, bundleOf("item" to annotation))
             }
-            val spannableString = SpannableString(temp.text)
-            for (clickableWord in list) {
-                val startIndex = temp.text.indexOf(clickableWord.word)
-                if (startIndex != -1) {
-                    val endIndex = startIndex + clickableWord.word.length
-
-                    val clickableSpan = object : ClickableSpan() {
-                        override fun onClick(widget: View) {
-                            clickableWord.onClickAction(clickableWord.word)
-                        }
-                    }
-                    spannableString.setSpan(
-                        clickableSpan,
-                        startIndex,
-                        endIndex,
-                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-            }
-            _text.postValue(spannableString)
+            _text.postValue(adapter.adapt(apiService.getRandomTrivia()))
         }
     }
-    fun getJoke(){
+    fun getJoke(navController:NavController){
         viewModelScope.launch {
-            val temp = apiService.getRandomJoke()
-            val list = apiService.getTexts(temp.text!!).map { word ->
-                ClickableWord(word.annotation) { clickedWord ->
-                    Log.d("word","$clickedWord")
-                }
+            adapter.setOnSpanClickListener {annotation->
+                Log.d("clicked", annotation)
+                navController.navigate(R.id.TriviaToSearch, bundleOf("item" to annotation))
             }
-            val spannableString = SpannableString(temp.text)
-            for (clickableWord in list) {
-                val startIndex = temp.text.indexOf(clickableWord.word)
-                if (startIndex != -1) {
-                    val endIndex = startIndex + clickableWord.word.length
-
-                    val clickableSpan = object : ClickableSpan() {
-                        override fun onClick(widget: View) {
-                            clickableWord.onClickAction(clickableWord.word)
-                        }
-                    }
-
-                    spannableString.setSpan(
-                        clickableSpan,
-                        startIndex,
-                        endIndex,
-                        SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
-            }
-            _text.postValue(spannableString)
+            _text.postValue(adapter.adapt(apiService.getRandomJoke()))
         }
     }
-data class ClickableWord(val word: String, val onClickAction: (String) -> Unit)
-
+    fun updateScreen(binding:FragmentTriviaBinding){
+        binding.title.text = "POG"
+        binding.text.text = _text.value
+        binding.text.movementMethod = LinkMovementMethod.getInstance()
+    }
 }

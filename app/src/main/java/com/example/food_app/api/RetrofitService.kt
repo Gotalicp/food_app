@@ -1,8 +1,8 @@
 package com.example.food_app.api
 
+import android.text.SpannableString
 import com.example.food_app.data.ExtendedRecipe
-import com.example.food_app.data.FoodItem
-import com.example.food_app.data.RandomFoodTriviaResponse
+import com.example.food_app.data.Trivia
 
 interface RetrofitService {
 
@@ -12,7 +12,6 @@ interface RetrofitService {
     suspend fun getTheRecipes(id: Int): ExtendedRecipe?
     suspend fun getSearchPrediction(query:String): List<String>?
     suspend fun getAnalyzedRecipe(recipe:ExtendedRecipe): ExtendedRecipe
-    suspend fun getTexts(text:String): MutableList<FoodItem>
-    suspend fun getRandomTrivia(): RandomFoodTriviaResponse
-    suspend fun getRandomJoke(): RandomFoodTriviaResponse
+    suspend fun getRandomTrivia(): Trivia
+    suspend fun getRandomJoke(): Trivia
 }
