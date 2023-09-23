@@ -9,12 +9,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.food_app.FireBaseViewModel
 import com.example.food_app.R
 import com.example.food_app.data.ExtendedRecipe
 import com.example.food_app.data.ItemClickListener
 import com.example.food_app.databinding.FragmentFavBinding
-import com.example.food_app.search.FavAdapter
 
 class FavFragment : Fragment(R.layout.fragment_fav) {
 
@@ -24,7 +22,6 @@ class FavFragment : Fragment(R.layout.fragment_fav) {
     private val favViewModel: FavViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        favViewModel.getFav()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +30,9 @@ class FavFragment : Fragment(R.layout.fragment_fav) {
         _binding = FragmentFavBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        favViewModel.getFav()
         val favAdapter = FavAdapter().apply {
             itemClickListener = object : ItemClickListener<ExtendedRecipe> {
                 override fun onItemClicked(item: ExtendedRecipe, itemPosition: Int) {

@@ -27,16 +27,20 @@ data class ExtendedRecipe(
     val readyInMinutes: String?=null,
     val extendedIngredients: List<Ingredient>?= mutableListOf(),
     val summary: String?=null,
-    var analyzedRecipe:List<AnalyzedRecipe>?=null,
-    var isAnalyzed: Boolean = false,
+    var analyzedRecipe:MutableList<AnalyzedRecipe>?=null,
     var isLiked: Boolean = false,
     var likes: Int = 0
 )
 data class AnalyzedRecipe(
-    val name:String?=null,
-    val steps: List<Step>
+    val steps: MutableList<Step>
 )
 data class Step(
     val number: Int?=null,
     val step: String?=null,
+)
+data class FoodItem(
+    val annotation: String,
+)
+data class RandomFoodTriviaResponse(
+    val text: String? = null
 )

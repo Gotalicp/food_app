@@ -29,12 +29,12 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.food_app.SettingsFragment"
+        android:name="com.example.food_app.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/triviaFragment"
-        android:name="com.example.food_app.TriviaFragment"
+        android:name="com.example.food_app.trivia.TriviaFragment"
         android:label="fragment_trivia"
         tools:layout="@layout/fragment_trivia" />
     <fragment

@@ -1,4 +1,4 @@
-package com.example.food_app
+package com.example.food_app.settings
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.example.food_app.FireBaseViewModel
+import com.example.food_app.R
 import com.example.food_app.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -14,9 +16,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private val binding get() = _binding!!
 
     private val fireBaseViewModel: FireBaseViewModel by activityViewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val settingViewModel: SettingViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +27,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.apply {
-            btnLogout.setOnClickListener {
+            logoutButton.setOnClickListener {
                 fireBaseViewModel.logout()
+                settingViewModel.logout()
             }
-            btnRead.setOnClickListener{
+            policyButton.setOnClickListener{
+
+            }
+            userButton.setOnClickListener{
+
+            }
+            themesButton.setOnClickListener {
+
             }
         }
     }

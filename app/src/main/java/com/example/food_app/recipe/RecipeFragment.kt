@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.food_app.FireBaseViewModel
@@ -19,7 +22,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private val binding get() = _binding!!
 
     private val recipeViewModel: RecipeViewModel by activityViewModels()
-    private val fireBaseViewModel: FireBaseViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +71,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
             favoriteButton.setOnClickListener{
                 recipeViewModel.changeFavState()
+            }
+            backButton.setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }

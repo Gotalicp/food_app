@@ -1,4 +1,4 @@
-package com.example.food_app.search
+package com.example.food_app.fav
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -25,6 +25,7 @@ class FavAdapter: RecyclerView.Adapter<FavAdapter.FavViewHolder>() {
     }
 
     override fun getItemCount() = items.size
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(list: List<ExtendedRecipe>){
         items = list.toMutableList()
         notifyDataSetChanged()

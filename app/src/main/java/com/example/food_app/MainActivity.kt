@@ -13,10 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
+//    private lateinit var appBarConfiguration: AppBarConfiguration
     private val fireBaseViewModel: FireBaseViewModel by viewModels()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -28,8 +26,12 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
+        val apiService = application.getApiService()
+        apiService.initCache()
     }
+
     override fun onSupportNavigateUp(): Boolean {
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.searchFragment, R.id.favFragment, R.id.historyFragment,R.id.settingsFragment,R.id.triviaFragment))
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()

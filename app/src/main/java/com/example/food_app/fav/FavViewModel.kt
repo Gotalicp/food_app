@@ -15,15 +15,9 @@ class FavViewModel(application: Application): AndroidViewModel(application) {
 
     private val _results = MutableLiveData<List<ExtendedRecipe>>()
     val results: LiveData<List<ExtendedRecipe>> get() = _results
-
-    init {
-        viewModelScope.launch {
-            _results.value = apiService.getFavourite()
-        }
-    }
     fun getFav(){
         viewModelScope.launch {
-            _results.value = apiService.getFavourite()
+            _results.postValue(apiService.getFavourite())
         }
     }
 }

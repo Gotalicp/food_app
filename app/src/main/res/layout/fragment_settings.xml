@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".TriviaFragment">
-
+    android:padding="16dp">
     <Button
-        android:id="@+id/btn_logout"
+        android:id="@+id/userButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="LogOut" />
+        android:text="User"
+        android:onClick="onUserButtonClick" />
     <Button
-        android:id="@+id/btn_user"
+        android:id="@+id/themesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="User" />
+        android:text="Themes"
+        android:onClick="onThemesButtonClick" />
     <Button
-        android:id="@+id/btn_read"
+        android:id="@+id/policyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="READ" />
-
+        android:text="Policy"
+        android:onClick="onPolicyButtonClick" />
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:onClick="onPolicyButtonClick" />
 </LinearLayout>
