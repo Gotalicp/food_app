@@ -11,6 +11,7 @@ class FireFavDataBaseAdapter: Adapter<DataSnapshot,MutableList<ExtendedRecipe>> 
             val id = recipeSnapshot.child("id").getValue(Int::class.java)
             val title = recipeSnapshot.child("title").getValue(String::class.java)
             val image = recipeSnapshot.child("image").getValue(String::class.java)
+            val servings = recipeSnapshot.child("servings").getValue(Int::class.java)
             val readyInMinutes = recipeSnapshot.child("readyInMinutes").getValue(String::class.java)
             val extendedIngredients = mutableListOf<Ingredient>()
             val summary = recipeSnapshot.child("summary").getValue(String::class.java)
@@ -50,6 +51,7 @@ class FireFavDataBaseAdapter: Adapter<DataSnapshot,MutableList<ExtendedRecipe>> 
                 id = id,
                 title = title,
                 image = image,
+                servings = servings!!,
                 readyInMinutes = readyInMinutes,
                 summary = summary,
                 extendedIngredients = extendedIngredients,

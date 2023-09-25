@@ -9,14 +9,6 @@
     android:layout_margin="8dp">
 
     <ImageButton
-        android:id="@+id/back_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
         android:id="@+id/favorite_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -38,10 +30,24 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        app:layout_constraintBottom_toTopOf="@+id/scroll"
         app:layout_constraintEnd_toStartOf="@+id/ingredientsRecyclerView"
-        app:layout_constraintBottom_toTopOf="@+id/webview" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/like_button" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@id/ingredientsRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/favorite_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <WebView
         android:id="@+id/webview"
         android:layout_width="0dp"
@@ -50,7 +56,26 @@
         app:layout_constraintTop_toBottomOf="@+id/recipeImage"
         app:layout_constraintEnd_toStartOf="@+id/ingredientsRecyclerView"
         app:layout_constraintBottom_toTopOf="@+id/instructionsViewPager"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipeImage"
+        app:layout_constraintEnd_toStartOf="@+id/ingredientsRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/instructionsViewPager">
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="text"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="15dp"
+        />
+</HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientsRecyclerView"
@@ -59,7 +84,7 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             app:layout_constraintStart_toEndOf="@+id/recipeImage"
-            app:layout_constraintTop_toBottomOf="@+id/back_button"
+            app:layout_constraintTop_toBottomOf="@+id/like_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/instructionsViewPager"
             android:padding="16dp"/>

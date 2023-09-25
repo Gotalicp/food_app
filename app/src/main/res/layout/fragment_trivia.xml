@@ -30,7 +30,7 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Big Text Goes Here"
+            android:text="Trivia/Joke"
             android:textSize="36sp"
             android:gravity="center"
         />

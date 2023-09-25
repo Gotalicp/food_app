@@ -23,13 +23,14 @@ data class ExtendedRecipe(
     val id: Int?=null,
     val title: String?=null,
     val image: String?=null,
+    val servings: Int = 0,
     val readyInMinutes: String?=null,
     val extendedIngredients: List<Ingredient>?= mutableListOf(),
     val summary: String?=null,
     var analyzedRecipe:MutableList<AnalyzedRecipe>?=null,
     var isLiked: Boolean = false,
     var likes: Int = 0,
-    var tasteWidget:String? = null
+    var tasteWidget:String? = null,
 )
 data class AnalyzedRecipe(
     val steps: MutableList<Step>
