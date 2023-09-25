@@ -11,7 +11,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class HistoryViewModel(application: Application): AndroidViewModel(application) {
-
     private val sharedPreferences =
         application.getSharedPreferences("history", Context.MODE_PRIVATE)
 
@@ -20,7 +19,6 @@ class HistoryViewModel(application: Application): AndroidViewModel(application) 
 
     init {
         _cache.postValue(getRecipeList())
-        Log.d("adding",_cache.value.toString())
     }
     fun addToHistory(recipe: ExtendedRecipe) {
         Log.d("adding","$recipe")

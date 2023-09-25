@@ -37,7 +37,6 @@ class RetrofitSpoonacular: RetrofitService {
         private var predictionAdapter = PredictionAdapter()
         private val iDSAdapter = IDSAdapter()
         private val fireBaseViewModel = FireBaseViewModel()
-        private val triviaJokeAdapter = TriviaJokeAdapter()
 
     }
 
@@ -51,11 +50,10 @@ class RetrofitSpoonacular: RetrofitService {
             CoroutineScope(Dispatchers.Default).launch {
                 fireBaseViewModel.getFav {
                     recipeCache.addAll(it)
-                    favCache.addAll(it)
+                    favCache = it
                 }
             }
         }
-
         suspend fun getTheRecipes(id: Int) =
             recipeCache.find { it.id == id } ?: recipeApi.getTheRecipe(id, API_KEY)
                 .apply { recipeCache.add(this) }
@@ -73,7 +71,7 @@ class RetrofitSpoonacular: RetrofitService {
             )
         }
 
-        suspend fun getFavourite(): MutableList<ExtendedRecipe> = favCache
+        fun getFavourite(): MutableList<ExtendedRecipe> = favCache
         fun checkInFav(recipe: ExtendedRecipe) = recipe in favCache
         fun removeFromFav(recipe: ExtendedRecipe) {
             favCache.remove(recipe)

@@ -38,25 +38,24 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-        if(arguments!=null){
-            searchViewModel.updateResults(arguments?.getString("item")!!, 0)
-            text.text="Results"
-            searchView.setQuery(null,false )
-            searchViewModel.changeState(View.GONE)
-            searchView.clearFocus()
-        }
-        val resultAdapter = ResultAdapter().apply {
-            itemClickListener = object : ItemClickListener<ExtendedRecipe> {
-                override fun onItemClicked(item: ExtendedRecipe, itemPosition: Int) {
-                    findNavController().navigate(R.id.SearchToRecipe, bundleOf("id" to item.id))
+            if (arguments != null) {
+                searchViewModel.updateResults(arguments?.getString("item")!!, 0)
+                text.text = "Results"
+                searchView.setQuery(null, false)
+                searchViewModel.changeState(View.GONE)
+                searchView.clearFocus()
+            }
+            val resultAdapter = ResultAdapter().apply {
+                itemClickListener = object : ItemClickListener<ExtendedRecipe> {
+                    override fun onItemClicked(item: ExtendedRecipe, itemPosition: Int) {
+                        findNavController().navigate(R.id.SearchToRecipe, bundleOf("id" to item.id))
+                    }
                 }
             }
-        }
-
             val predictionAdapter = PredictionAdapter().apply {
                 itemClickListener = object : PredictionAdapter.ItemClickListener<String> {
                     override fun onItemClicked(item: String, itemPosition: Int) {
-                        searchView.setQuery(item,false)
+                        searchView.setQuery(item,true)
                     }
                 }
             }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_app"
-    app:startDestination="@id/settingsFragment">
+    app:startDestination="@id/searchFragment">
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.food_app.search.SearchFragment"
@@ -11,7 +11,7 @@
         <action
             android:id="@+id/SearchToRecipe"
             app:destination="@id/recipeFragment"
-            app:restoreState="true"
+            app:popUpToInclusive="true"
             app:popUpTo="@id/searchFragment"
             app:popUpToSaveState="true"/>
     </fragment>
@@ -23,8 +23,8 @@
         <action
             android:id="@+id/FavToRecipe"
             app:destination="@id/recipeFragment"
-            app:restoreState="true"
             app:popUpTo="@id/favFragment"
+            app:popUpToInclusive="true"
             app:popUpToSaveState="true"/>
     </fragment>
     <fragment
@@ -34,7 +34,10 @@
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/SettingToPolicy"
-            app:destination="@id/privacyPolicyFragment" />
+            app:destination="@id/privacyPolicyFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToSaveState="true"/>
     </fragment>
     <fragment
         android:id="@+id/triviaFragment"
@@ -43,7 +46,10 @@
         tools:layout="@layout/fragment_trivia" >
         <action
             android:id="@+id/TriviaToSearch"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/triviaFragment"
+            app:popUpToSaveState="true"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -52,7 +58,10 @@
         tools:layout="@layout/fragment_history" >
         <action
             android:id="@+id/HistoryToRecipe"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/historyFragment"
+            app:popUpToSaveState="true"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -64,6 +73,9 @@
         android:label="PrivacyPolicyFragment" >
         <action
             android:id="@+id/action_privacyPolicyFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToSaveState="true"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>
