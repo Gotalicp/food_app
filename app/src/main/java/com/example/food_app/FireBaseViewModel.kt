@@ -96,7 +96,7 @@ class FireBaseViewModel: ViewModel() {
     }
     fun getFav(callback: (MutableList<ExtendedRecipe>) -> Unit) {
         var uid = Firebase.auth.currentUser?.uid
-        Firebase.database.getReference("user/${uid}").get().addOnSuccessListener { documentSnapshot ->
+        Firebase.database.getReference("user/${uid}").get[().addOnSuccessListener { documentSnapshot ->
             if (documentSnapshot != null) {
                 val result = fireFavDataBaseAdapter.adapt(documentSnapshot)
                 Log.d("firebase"," text $result")

@@ -34,7 +34,7 @@ class RetrofitSpoonacular: RetrofitService {
         private var api: RetrofitSpoonacular? = null
 
         fun getApi() = api ?: RetrofitSpoonacular()
-        private var predictionAdapter = PredictionAdapter()
+            private var predictionAdapter = PredictionAdapter()
         private val iDSAdapter = IDSAdapter()
         private val fireBaseViewModel = FireBaseViewModel()
 
